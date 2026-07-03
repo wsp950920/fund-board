@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>鐑偣璧勯噾姒?路 涓婅瘉鎸囨暟</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<title>鐑偣璧勯噾姒?路 涓婅瘉鎸囨暟</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -24,7 +24,6 @@
     min-height: 100vh;
   }
 
-  /* ===== Header ===== */
   .header {
     background: linear-gradient(180deg, #0f0f14 0%, #0a0a0e 100%);
     padding: 4px 6px 3px;
@@ -44,7 +43,6 @@
   .header-top .left h1 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
   .header-top .time { font-size: 8px; color: rgba(255,255,255,0.3); }
 
-  /* Session selector */
   .session-selector {
     display: flex; gap: 2px;
     padding: 2px 6px;
@@ -63,7 +61,6 @@
     color: #e74c3c;
   }
 
-  /* Index bar */
   .index-row {
     display: flex; align-items: baseline; gap: 4px;
     padding: 3px 5px;
@@ -79,7 +76,6 @@
   .index-row .ichange.down { color: #27ae60; }
   .index-row .isource { margin-left: auto; font-size: 7px; color: rgba(255,255,255,0.12); }
 
-  /* ===== Stats bar ===== */
   .stats-bar {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
     padding: 3px 6px;
@@ -94,10 +90,8 @@
   .stat-item .svalue.white { color: #fff; }
   .stat-item .svalue.blue { color: #5b8ff9; }
 
-  /* ===== Main Grid ===== */
-  .main-grid { display: flex; flex-direction: column; gap: 1px; }
+  .main-grid { display: flex; flex-direction: column; gap: 2px; }
 
-  /* ===== Panel ===== */
   .panel { padding: 3px 1px 2px; }
   .panel .ptitle {
     font-size: 10px; font-weight: 700; margin-bottom: 2px; padding: 0 1px;
@@ -113,7 +107,24 @@
   .panel.outflow .ptitle .pcount { color: #e74c3c; }
   .panel.inflow .ptitle .pcount { color: #27ae60; }
 
-  /* Item */
+  .section-tab {
+    display: flex; gap: 2px; padding: 2px 2px 0;
+  }
+  .section-tab .tab-btn {
+    font-size: 9px; padding: 3px 10px;
+    border-radius: 3px 3px 0 0; border: none;
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.3);
+    cursor: pointer; font-weight: 600;
+  }
+  .section-tab .tab-btn.active {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+  }
+
+  .section-body { }
+  .section-body.hidden { display: none; }
+
   .item {
     display: flex; align-items: center;
     padding: 2px 0;
@@ -172,7 +183,6 @@
   .bfill.red-bar { background: #e74c3c; }
   .bfill.green-bar { background: #27ae60; }
 
-  /* ===== Total Row ===== */
   .total-row {
     display: flex; align-items: center;
     padding: 3px 6px; gap: 4px;
@@ -184,7 +194,6 @@
   .total-row .tval.red { color: #e74c3c; }
   .total-row .tval.green { color: #27ae60; }
 
-  /* ===== Footer ===== */
   .footer {
     padding: 3px 6px; font-size: 7px; color: rgba(255,255,255,0.1);
     border-top: 1px solid rgba(255,255,255,0.02);
@@ -235,22 +244,51 @@
   </div>
 </div>
 
+<!-- 鏉垮潡鍒囨崲鏍囩 -->
+<div class="section-tab">
+  <button class="tab-btn active" data-section="concept">姒傚康鏉垮潡</button>
+  <button class="tab-btn" data-section="industry">琛屼笟鏉垮潡</button>
+</div>
+
 <div class="main-grid">
-  <div class="panel outflow">
-    <div class="ptitle">
-      馃敶 娴佸嚭
-      <span class="pcount" id="outCount">10</span>
-      <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
+  <!-- 姒傚康鏉垮潡 -->
+  <div class="section-body" id="section-concept">
+    <div class="panel outflow">
+      <div class="ptitle">
+        馃敶 娴佸嚭
+        <span class="pcount" id="outCountC">10</span>
+        <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
+      </div>
+      <div id="outflowListC"></div>
     </div>
-    <div id="outflowList"></div>
+    <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
+      <div class="ptitle">
+        馃煝 娴佸叆
+        <span class="pcount" id="inCountC">10</span>
+        <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
+      </div>
+      <div id="inflowListC"></div>
+    </div>
   </div>
-  <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
-    <div class="ptitle">
-      馃煝 娴佸叆
-      <span class="pcount" id="inCount">10</span>
-      <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
+
+  <!-- 琛屼笟鏉垮潡 -->
+  <div class="section-body hidden" id="section-industry">
+    <div class="panel outflow">
+      <div class="ptitle">
+        馃敶 娴佸嚭
+        <span class="pcount" id="outCountI">10</span>
+        <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
+      </div>
+      <div id="outflowListI"></div>
     </div>
-    <div id="inflowList"></div>
+    <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
+      <div class="ptitle">
+        馃煝 娴佸叆
+        <span class="pcount" id="inCountI">10</span>
+        <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
+      </div>
+      <div id="inflowListI"></div>
+    </div>
   </div>
 </div>
 
@@ -271,125 +309,119 @@
 </div>
 
 <script>
+// ===== 鎴浘澶囩敤鏁版嵁 =====
 const SCREENSHOT_DATA = {
-  outflow: [
-    { name: "鍗婂浣?, flow: -408.6 }, { name: "鍥戒骇鑺墖", flow: -206.0 },
-    { name: "瀛樺偍鑺墖", flow: -187.5 }, { name: "鐗╄仈缃?, flow: -134.8 },
-    { name: "鍏夌氦", flow: -130.7 }, { name: "鐜荤拑鍩烘澘", flow: -92.8 },
-    { name: "娑堣垂鐢靛瓙", flow: -64.7 }, { name: "鍥烘€佺數姹?, flow: -61.1 },
-    { name: "浜哄伐鏅鸿兘", flow: -55.7 }, { name: "閿傜數姹?, flow: -55.0 }
-  ],
-  inflow: [
-    { name: "鏈哄櫒浜?, flow: +128.6 }, { name: "鏂拌兘婧愯溅", flow: +101.3 },
-    { name: "浣庣┖缁忔祹", flow: +68.9 }, { name: "鍐涘伐", flow: +45.5 },
-    { name: "榛勯噾", flow: +35.0 }, { name: "鍟嗕笟鑸ぉ", flow: +17.4 },
-    { name: "鐢靛瓙鍏冧欢", flow: +5.1 }, { name: "鍒涙柊鑽?, flow: +3.3 },
-    { name: "鏈夎壊閲戝睘", flow: +3.2 }, { name: "鐢电綉璁惧", flow: +3.0 }
-  ],
+  concept: {
+    outflow: [
+      { name: "鍗婂浣?, flow: -408.6 }, { name: "鍥戒骇鑺墖", flow: -206.0 },
+      { name: "瀛樺偍鑺墖", flow: -187.5 }, { name: "鐗╄仈缃?, flow: -134.8 },
+      { name: "鍏夌氦", flow: -130.7 }, { name: "鐜荤拑鍩烘澘", flow: -92.8 },
+      { name: "娑堣垂鐢靛瓙", flow: -64.7 }, { name: "鍥烘€佺數姹?, flow: -61.1 },
+      { name: "浜哄伐鏅鸿兘", flow: -55.7 }, { name: "閿傜數姹?, flow: -55.0 }
+    ],
+    inflow: [
+      { name: "鏈哄櫒浜?, flow: +128.6 }, { name: "鏂拌兘婧愯溅", flow: +101.3 },
+      { name: "浣庣┖缁忔祹", flow: +68.9 }, { name: "鍐涘伐", flow: +45.5 },
+      { name: "榛勯噾", flow: +35.0 }, { name: "鍟嗕笟鑸ぉ", flow: +17.4 },
+      { name: "鐢靛瓙鍏冧欢", flow: +5.1 }, { name: "鍒涙柊鑽?, flow: +3.3 },
+      { name: "鏈夎壊閲戝睘", flow: +3.2 }, { name: "鐢电綉璁惧", flow: +3.0 }
+    ]
+  },
+  industry: {
+    outflow: [
+      { name: "鍗婂浣?, flow: -408.6 }, { name: "娑堣垂鐢靛瓙", flow: -64.7 },
+      { name: "閰块厭琛屼笟", flow: -48.2 }, { name: "鎴垮湴浜у紑鍙?, flow: -42.1 },
+      { name: "鍏変紡璁惧", flow: -38.5 }, { name: "鐢垫睜", flow: -35.3 },
+      { name: "浜掕仈缃戞湇鍔?, flow: -32.8 }, { name: "姹借溅鏁磋溅", flow: -29.6 },
+      { name: "瀹剁數琛屼笟", flow: -22.4 }, { name: "鍖栧鍒跺搧", flow: -18.7 }
+    ],
+    inflow: [
+      { name: "閫氱敤璁惧", flow: +56.2 }, { name: "涓撶敤璁惧", flow: +48.9 },
+      { name: "鍖荤枟鍣ㄦ", flow: +37.4 }, { name: "鑸ぉ鑸┖", flow: +26.1 },
+      { name: "璐甸噾灞?, flow: +22.3 }, { name: "鐢靛瓙鍏冧欢", flow: +15.1 },
+      { name: "閫氫俊璁惧", flow: +12.6 }, { name: "鐢靛姏琛屼笟", flow: +9.8 },
+      { name: "鐢电綉璁惧", flow: +6.5 }, { name: "涓嵂", flow: +4.2 }
+    ]
+  },
   index: { price: "4043.64", change: "+0.37%", isUp: true, volume: "1.47涓囦嚎" }
 };
 
+// ===== API 鍦板潃 =====
 const CONCEPT_URL = 'https://push2.eastmoney.com/api/qt/clist/get?cb=&fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:3&fields=f12,f14,f62,f69';
+const INDUSTRY_URL = 'https://push2.eastmoney.com/api/qt/clist/get?cb=&fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f12,f14,f62,f69';
 const INDEX_URL = 'https://push2.eastmoney.com/api/qt/stock/get?cb=&fltt=2&invt=2&secid=1.000001&fields=f43,f44,f45,f46,f47,f48,f50,f57,f58,f60,f152,f170';
 
-async function fetchRealData() {
+let currentSession = 'close';
+let currentSection = 'concept'; // concept or industry
+const SNAPSHOT_KEY = 'fund_board_snapshots';
+
+// ===== 鏁版嵁鑾峰彇 =====
+async function fetchSectionData(url) {
   try {
-    const [conceptResp, idxResp] = await Promise.all([fetch(CONCEPT_URL), fetch(INDEX_URL)]);
-    const conceptJson = await conceptResp.json();
-    const idxJson = await idxResp.json();
-    let idxData = null;
-    if (idxJson.rc === 0 && idxJson.data) {
-      const d = idxJson.data;
-      const price = (d.f43 / 100).toFixed(2);
-      const change = (d.f43 - d.f44) / 100;
-      const changePct = d.f170 != null ? d.f170 / 100 : 0;
-      const isUp = change >= 0;
-      idxData = { price, change: (isUp ? '+' : '') + change.toFixed(2) + '%', isUp, volume: d.f48 ? (d.f48 / 1e8).toFixed(1) + '浜? : '--' };
-    }
-    let conceptData = null;
-    if (conceptJson.rc === 0 && conceptJson.data) {
-      const items = conceptJson.data.diff;
+    const resp = await fetch(url);
+    const json = await resp.json();
+    if (json.rc === 0 && json.data && json.data.diff) {
+      const items = json.data.diff;
       const outflow = items.filter(i => (i.f62 || 0) < 0).slice(0, 10).map(i => ({ name: i.f14, flow: parseFloat((i.f62 / 1e8).toFixed(1)) }));
       const inflow = items.filter(i => (i.f62 || 0) > 0).slice(0, 10).map(i => ({ name: i.f14, flow: parseFloat((i.f62 / 1e8).toFixed(1)) }));
-      if (outflow.length >= 5 && inflow.length >= 5) conceptData = { outflow, inflow };
+      if (outflow.length >= 5 && inflow.length >= 5) return { outflow, inflow };
     }
-    return { idxData, conceptData };
+    return null;
   } catch(e) { return null; }
 }
 
-function render(data) {
-  const { outflow, inflow, idxData, isSnapshot, snapTime } = data;
-  const now = new Date();
-  const mo = (now.getMonth()+1).toString().padStart(2,'0');
-  const da = now.getDate().toString().padStart(2,'0');
-  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
-  document.getElementById('dateTag').textContent = mo + '鏈? + da + '鏃?' + (labelMap[currentSession] || '鏀剁洏');
-  const ts = now.toLocaleString('zh-CN', { hour12: false });
-  document.getElementById('updateTime').textContent = snapTime ? '蹇収 ' + snapTime : ts;
-  document.getElementById('footerTime').textContent = snapTime ? '蹇収浜?' + snapTime : '鏇存柊浜?' + ts;
+async function fetchIndexData() {
+  try {
+    const resp = await fetch(INDEX_URL);
+    const json = await resp.json();
+    if (json.rc === 0 && json.data) {
+      const d = json.data;
+      const price = (d.f43 / 100).toFixed(2);
+      const change = (d.f43 - d.f44) / 100;
+      const isUp = change >= 0;
+      return { price, change: (isUp ? '+' : '') + change.toFixed(2) + '%', isUp, volume: d.f48 ? (d.f48 / 1e8).toFixed(1) + '浜? : '--' };
+    }
+    return null;
+  } catch(e) { return null; }
+}
 
-  if (idxData) {
-    document.getElementById('indexPrice').textContent = idxData.price;
-    document.getElementById('indexPrice').className = 'iprice ' + (idxData.isUp ? 'up' : 'down');
-    document.getElementById('indexChange').textContent = idxData.change;
-    document.getElementById('indexChange').className = 'ichange ' + (idxData.isUp ? 'up' : 'down');
-    document.getElementById('volume').textContent = idxData.volume || '--';
-  } else {
-    document.getElementById('indexPrice').textContent = SCREENSHOT_DATA.index.price;
-    document.getElementById('indexPrice').className = 'iprice up';
-    document.getElementById('indexChange').textContent = SCREENSHOT_DATA.index.change;
-    document.getElementById('indexChange').className = 'ichange up';
-  }
+async function fetchRealData() {
+  const idxData = await fetchIndexData();
+  const [conceptData, industryData] = await Promise.all([
+    fetchSectionData(CONCEPT_URL),
+    fetchSectionData(INDUSTRY_URL)
+  ]);
+  return { idxData, conceptData, industryData };
+}
 
-  document.getElementById('outCount').textContent = outflow.length;
-  document.getElementById('inCount').textContent = inflow.length;
+// ===== 娓叉煋 =====
+function renderItem(item, idx, maxAbs) {
+  const abs = Math.abs(item.flow);
+  const barPct = (abs / maxAbs) * 100;
+  const topCls = idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : '';
+  const isGreen = item.flow > 0;
+  const prefix = isGreen ? '+' : '-';
+  return `<div class="item ${topCls}">
+    <span class="irank">${idx+1}</span>
+    <span class="iname">${item.name}</span>
+    <div class="ibar" data-bar="${barPct}"><div class="bfill ${isGreen ? 'green-bar' : 'red-bar'}" style="width:0%"></div></div>
+    <span class="ival ${isGreen ? 'green' : 'red'}" data-target="${abs.toFixed(1)}">0.0浜?/span>
+  </div>`;
+}
 
+function renderSection(sectionId, data) {
+  const { outflow, inflow } = data;
   const maxOut = Math.max(...outflow.map(i => Math.abs(i.flow)), 1);
   const maxIn = Math.max(...inflow.map(i => Math.abs(i.flow)), 1);
-  const totalOut = outflow.reduce((s, i) => s + Math.abs(i.flow), 0);
-  const totalIn = inflow.reduce((s, i) => s + i.flow, 0);
-  const netFlowVal = totalIn - totalOut;
 
-  document.getElementById('totalOut').textContent = '-' + totalOut.toFixed(1) + '浜?;
-  document.getElementById('totalIn').textContent = '+' + totalIn.toFixed(1) + '浜?;
-  document.getElementById('netFlow').textContent = (netFlowVal >= 0 ? '+' : '') + netFlowVal.toFixed(1) + '浜?;
-  document.getElementById('netFlow').className = 'tval ' + (netFlowVal >= 0 ? 'green' : 'red');
-  document.getElementById('upCount').textContent = inflow.length + '瀹?;
-  document.getElementById('dnCount').textContent = outflow.length + '瀹?;
-  const mainNet = totalIn - totalOut;
-  document.getElementById('mainNet').textContent = (mainNet >= 0 ? '+' : '') + mainNet.toFixed(1) + '浜?;
-  document.getElementById('mainNet').className = 'svalue ' + (mainNet >= 0 ? 'green' : 'red');
+  document.getElementById('outCount' + sectionId).textContent = outflow.length;
+  document.getElementById('inCount' + sectionId).textContent = inflow.length;
 
-  let outHtml = '';
-  outflow.forEach((item, idx) => {
-    const abs = Math.abs(item.flow);
-    const barPct = (abs / maxOut) * 100;
-    const topCls = idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : '';
-    outHtml += `<div class="item ${topCls}">
-      <span class="irank">${idx+1}</span>
-      <span class="iname">${item.name}</span>
-      <div class="ibar" data-bar="${barPct}"><div class="bfill red-bar" style="width:0%"></div></div>
-      <span class="ival red" data-target="${abs.toFixed(1)}">0.0浜?/span>
-    </div>`;
-  });
-  document.getElementById('outflowList').innerHTML = outHtml;
+  document.getElementById('outflowList' + sectionId).innerHTML = outflow.map((item, idx) => renderItem(item, idx, maxOut)).join('');
+  document.getElementById('inflowList' + sectionId).innerHTML = inflow.map((item, idx) => renderItem(item, idx, maxIn)).join('');
 
-  let inHtml = '';
-  inflow.forEach((item, idx) => {
-    const abs = Math.abs(item.flow);
-    const barPct = (abs / maxIn) * 100;
-    const topCls = idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : '';
-    inHtml += `<div class="item ${topCls}">
-      <span class="irank">${idx+1}</span>
-      <span class="iname">${item.name}</span>
-      <div class="ibar" data-bar="${barPct}"><div class="bfill green-bar" style="width:0%"></div></div>
-      <span class="ival green" data-target="${abs.toFixed(1)}">0.0浜?/span>
-    </div>`;
-  });
-  document.getElementById('inflowList').innerHTML = inHtml;
-
-  // Animate both bars and values
-  const items = document.querySelectorAll('.item');
+  // 鍔ㄧ敾
+  const items = document.querySelectorAll('#section-' + (sectionId === 'C' ? 'concept' : 'industry') + ' .item');
   const DURATION = 20000;
   items.forEach((item, idx) => {
     const delay = idx * 150;
@@ -427,12 +459,64 @@ function render(data) {
   });
 }
 
-let currentSession = 'close';
-const SNAPSHOT_KEY = 'fund_board_snapshots';
+function render(data) {
+  const { idxData, conceptData, industryData, isSnapshot, snapTime } = data;
+  const now = new Date();
+  const mo = (now.getMonth()+1).toString().padStart(2,'0');
+  const da = now.getDate().toString().padStart(2,'0');
+  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
+  document.getElementById('dateTag').textContent = mo + '鏈? + da + '鏃?' + (labelMap[currentSession] || '鏀剁洏');
+  const ts = now.toLocaleString('zh-CN', { hour12: false });
+  document.getElementById('updateTime').textContent = snapTime ? '蹇収 ' + snapTime : ts;
+  document.getElementById('footerTime').textContent = snapTime ? '蹇収浜?' + snapTime : '鏇存柊浜?' + ts;
 
+  if (idxData) {
+    document.getElementById('indexPrice').textContent = idxData.price;
+    document.getElementById('indexPrice').className = 'iprice ' + (idxData.isUp ? 'up' : 'down');
+    document.getElementById('indexChange').textContent = idxData.change;
+    document.getElementById('indexChange').className = 'ichange ' + (idxData.isUp ? 'up' : 'down');
+    document.getElementById('volume').textContent = idxData.volume || '--';
+  } else {
+    document.getElementById('indexPrice').textContent = SCREENSHOT_DATA.index.price;
+    document.getElementById('indexPrice').className = 'iprice up';
+    document.getElementById('indexChange').textContent = SCREENSHOT_DATA.index.change;
+    document.getElementById('indexChange').className = 'ichange up';
+  }
+
+  // 姒傚康鏉垮潡
+  if (conceptData) {
+    renderSection('C', conceptData);
+  } else {
+    renderSection('C', SCREENSHOT_DATA.concept);
+  }
+
+  // 琛屼笟鏉垮潡
+  if (industryData) {
+    renderSection('I', industryData);
+  } else {
+    renderSection('I', SCREENSHOT_DATA.industry);
+  }
+
+  // 鍚堣锛堜互褰撳墠鏄剧ず鏉垮潡涓哄噯锛?  const activeData = currentSection === 'concept' ? (conceptData || SCREENSHOT_DATA.concept) : (industryData || SCREENSHOT_DATA.industry);
+  const totalOut = activeData.outflow.reduce((s, i) => s + Math.abs(i.flow), 0);
+  const totalIn = activeData.inflow.reduce((s, i) => s + i.flow, 0);
+  const netFlowVal = totalIn - totalOut;
+
+  document.getElementById('totalOut').textContent = '-' + totalOut.toFixed(1) + '浜?;
+  document.getElementById('totalIn').textContent = '+' + totalIn.toFixed(1) + '浜?;
+  document.getElementById('netFlow').textContent = (netFlowVal >= 0 ? '+' : '') + netFlowVal.toFixed(1) + '浜?;
+  document.getElementById('netFlow').className = 'tval ' + (netFlowVal >= 0 ? 'green' : 'red');
+
+  document.getElementById('upCount').textContent = activeData.inflow.length + '瀹?;
+  document.getElementById('dnCount').textContent = activeData.outflow.length + '瀹?;
+  const mainNet = totalIn - totalOut;
+  document.getElementById('mainNet').textContent = (mainNet >= 0 ? '+' : '') + mainNet.toFixed(1) + '浜?;
+  document.getElementById('mainNet').className = 'svalue ' + (mainNet >= 0 ? 'green' : 'red');
+}
+
+// ===== 蹇収 =====
 function getSnapshots() {
-  try { return JSON.parse(localStorage.getItem(SNAPSHOT_KEY)) || {}; }
-  catch(e) { return {}; }
+  try { return JSON.parse(localStorage.getItem(SNAPSHOT_KEY)) || {}; } catch(e) { return {}; }
 }
 
 function saveSnapshot(session, data) {
@@ -440,8 +524,8 @@ function saveSnapshot(session, data) {
   const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
   snaps[dateStr + '_' + session] = {
     time: new Date().toLocaleString('zh-CN', {hour12: false}),
-    outflow: data.outflow,
-    inflow: data.inflow,
+    concept: data.conceptData || null,
+    industry: data.industryData || null,
     idxData: data.idxData
   };
   localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snaps));
@@ -457,10 +541,9 @@ function autoDetectSession() {
   const h = new Date().getHours();
   const m = new Date().getMinutes();
   const totalMin = h * 60 + m;
-  let session = 'close';
-  if (totalMin >= 570 && totalMin < 690) session = 'morning';
-  else if (totalMin >= 780 && totalMin < 900) session = 'noon';
-  return session;
+  if (totalMin >= 570 && totalMin < 690) return 'morning';
+  if (totalMin >= 780 && totalMin < 900) return 'noon';
+  return 'close';
 }
 
 function updateSessionUI(session) {
@@ -472,56 +555,60 @@ function updateSessionUI(session) {
   document.querySelector('.date-tag').textContent = dateStr + '鏃?' + labelMap[session];
 }
 
+// ===== 鏉垮潡鍒囨崲 =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentSection = this.dataset.section;
+    document.querySelectorAll('.section-body').forEach(el => el.classList.add('hidden'));
+    document.getElementById('section-' + currentSection).classList.remove('hidden');
+  });
+});
+
+// ===== 鏃舵鍒囨崲 =====
 document.querySelectorAll('.s-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
     currentSession = this.dataset.session;
-    const snap = loadSnapshot(currentSession);
-    if (snap) {
-      render({ outflow: snap.outflow, inflow: snap.inflow, idxData: snap.idxData, isSnapshot: true, snapTime: snap.time });
-    } else {
-      refreshData();
-    }
+    loadAndRender();
   });
 });
 
-function saveCurrentSnapshot(data) {
-  saveSnapshot(currentSession, data);
+async function loadAndRender() {
+  const snap = loadSnapshot(currentSession);
+  if (snap && snap.concept && snap.industry) {
+    render({ idxData: snap.idxData, conceptData: snap.concept, industryData: snap.industry, isSnapshot: true, snapTime: snap.time });
+  } else {
+    await refreshData();
+  }
 }
 
 async function refreshData() {
   const r = await fetchRealData();
-  if (r && r.conceptData) {
-    saveCurrentSnapshot({ outflow: r.conceptData.outflow, inflow: r.conceptData.inflow, idxData: r.idxData });
-    render({ outflow: r.conceptData.outflow, inflow: r.conceptData.inflow, idxData: r.idxData });
+  if (r && r.conceptData && r.industryData) {
+    saveSnapshot(currentSession, r);
+    render(r);
   } else {
-    render({ outflow: SCREENSHOT_DATA.outflow, inflow: SCREENSHOT_DATA.inflow, idxData: SCREENSHOT_DATA.index });
+    render({ idxData: SCREENSHOT_DATA.index, conceptData: SCREENSHOT_DATA.concept, industryData: SCREENSHOT_DATA.industry });
   }
 }
 
-function onSessionChange() {
-  updateSessionUI(currentSession);
-  const snap = loadSnapshot(currentSession);
-  if (snap) {
-    render({ outflow: snap.outflow, inflow: snap.inflow, idxData: snap.idxData, isSnapshot: true, snapTime: snap.time });
-  } else {
-    refreshData();
-  }
-}
-
+// ===== 鍒濆鍖?=====
 currentSession = autoDetectSession();
-onSessionChange();
+updateSessionUI(currentSession);
+loadAndRender();
 
 setInterval(() => {
   const s = autoDetectSession();
   if (s !== currentSession) {
     currentSession = s;
-    onSessionChange();
+    updateSessionUI(currentSession);
+    loadAndRender();
   }
   refreshData();
 }, 60000);
 </script>
 </body>
 </html>
-
