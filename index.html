@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>热点资金榜 · 上证指数</title>
+<title>鐑偣璧勯噾姒?路 涓婅瘉鎸囨暟</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -12,10 +15,10 @@
     color: #ccc;
     padding: 0;
     min-height: 100vh;
-    font-size: 11px;
+    font-size: 9px;
   }
   .container {
-    max-width: 480px;
+    max-width: 290px;
     margin: 0 auto;
     background: #0a0a0e;
     min-height: 100vh;
@@ -24,32 +27,32 @@
   /* ===== Header ===== */
   .header {
     background: linear-gradient(180deg, #0f0f14 0%, #0a0a0e 100%);
-    padding: 6px 12px 5px;
+    padding: 4px 6px 3px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
   .header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
-  .header-top .left { display: flex; align-items: center; gap: 6px; }
+  .header-top .left { display: flex; align-items: center; gap: 4px; }
   .header-top .left .date-tag {
-    font-size: 9px; color: #fff; background: #e74c3c;
-    padding: 1px 6px; border-radius: 2px; font-weight: 600;
+    font-size: 8px; color: #fff; background: #e74c3c;
+    padding: 1px 5px; border-radius: 2px; font-weight: 600;
   }
-  .header-top .left h1 { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-  .header-top .time { font-size: 9px; color: rgba(255,255,255,0.3); }
+  .header-top .left h1 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .header-top .time { font-size: 8px; color: rgba(255,255,255,0.3); }
 
   /* Session selector */
   .session-selector {
-    display: flex; gap: 3px;
-    padding: 3px 12px;
+    display: flex; gap: 2px;
+    padding: 2px 6px;
     background: rgba(255,255,255,0.02);
     border-bottom: 1px solid rgba(255,255,255,0.03);
   }
   .session-selector .s-btn {
-    font-size: 9px; padding: 2px 10px;
+    font-size: 8px; padding: 2px 7px;
     border-radius: 3px; border: none;
     background: rgba(255,255,255,0.04);
     color: rgba(255,255,255,0.3);
@@ -62,30 +65,30 @@
 
   /* Index bar */
   .index-row {
-    display: flex; align-items: baseline; gap: 6px;
-    padding: 4px 8px;
-    background: rgba(255,255,255,0.02); border-radius: 4px;
+    display: flex; align-items: baseline; gap: 4px;
+    padding: 3px 5px;
+    background: rgba(255,255,255,0.02); border-radius: 3px;
     border: 1px solid rgba(255,255,255,0.03);
   }
-  .index-row .iname { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 500; }
-  .index-row .iprice { font-size: 18px; font-weight: 700; letter-spacing: 0.3px; }
+  .index-row .iname { font-size: 9px; color: rgba(255,255,255,0.5); font-weight: 500; }
+  .index-row .iprice { font-size: 15px; font-weight: 700; letter-spacing: 0.2px; }
   .index-row .iprice.up { color: #e74c3c; }
   .index-row .iprice.down { color: #27ae60; }
-  .index-row .ichange { font-size: 11px; font-weight: 500; }
+  .index-row .ichange { font-size: 10px; font-weight: 500; }
   .index-row .ichange.up { color: #e74c3c; }
   .index-row .ichange.down { color: #27ae60; }
-  .index-row .isource { margin-left: auto; font-size: 8px; color: rgba(255,255,255,0.12); }
+  .index-row .isource { margin-left: auto; font-size: 7px; color: rgba(255,255,255,0.12); }
 
   /* ===== Stats bar ===== */
   .stats-bar {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
-    padding: 4px 12px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    padding: 3px 6px;
     background: rgba(255,255,255,0.015);
     border-bottom: 1px solid rgba(255,255,255,0.025);
   }
   .stat-item { text-align: center; }
-  .stat-item .slabel { font-size: 8px; color: rgba(255,255,255,0.3); margin-bottom: 1px; }
-  .stat-item .svalue { font-size: 13px; font-weight: 700; }
+  .stat-item .slabel { font-size: 7px; color: rgba(255,255,255,0.3); margin-bottom: 1px; }
+  .stat-item .svalue { font-size: 11px; font-weight: 700; }
   .stat-item .svalue.red { color: #e74c3c; }
   .stat-item .svalue.green { color: #27ae60; }
   .stat-item .svalue.white { color: #fff; }
@@ -95,17 +98,17 @@
   .main-grid { display: flex; flex-direction: column; gap: 1px; }
 
   /* ===== Panel ===== */
-  .panel { padding: 5px 4px 4px; }
+  .panel { padding: 3px 1px 2px; }
   .panel .ptitle {
-    font-size: 11px; font-weight: 700; margin-bottom: 4px;
-    display: flex; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 700; margin-bottom: 2px; padding: 0 1px;
+    display: flex; align-items: center; gap: 2px;
   }
   .panel.outflow .ptitle { color: #e74c3c; }
   .panel.inflow .ptitle { color: #27ae60; }
-  .panel .ptitle .psub { font-size: 8px; font-weight: 400; margin-left: auto; color: rgba(255,255,255,0.2); }
+  .panel .ptitle .psub { font-size: 7px; font-weight: 400; margin-left: auto; color: rgba(255,255,255,0.2); }
   .panel .ptitle .pcount {
-    font-size: 9px; font-weight: 600;
-    background: rgba(255,255,255,0.05); padding: 0 5px; border-radius: 3px;
+    font-size: 8px; font-weight: 600;
+    background: rgba(255,255,255,0.05); padding: 0 4px; border-radius: 2px;
   }
   .panel.outflow .ptitle .pcount { color: #e74c3c; }
   .panel.inflow .ptitle .pcount { color: #27ae60; }
@@ -113,9 +116,9 @@
   /* Item */
   .item {
     display: flex; align-items: center;
-    padding: 3px 2px;
+    padding: 2px 0;
     border-bottom: 1px solid rgba(255,255,255,0.03);
-    border-radius: 3px;
+    border-radius: 2px;
   }
   .item:last-child { border-bottom: none; }
   .outflow .item.top1 { background: rgba(231,76,60,0.25); }
@@ -125,10 +128,10 @@
   .inflow .item.top2 { background: rgba(39,174,96,0.15); }
   .inflow .item.top3 { background: rgba(39,174,96,0.08); }
   .item .irank {
-    font-size: 8px; color: rgba(255,255,255,0.25);
-    width: 14px; height: 14px; line-height: 14px;
+    font-size: 7px; color: rgba(255,255,255,0.25);
+    width: 12px; height: 12px; line-height: 12px;
     text-align: center; flex-shrink: 0;
-    border-radius: 2px;
+    border-radius: 2px; margin-left: 1px;
   }
   .inflow .item.top1 .irank { background: #27ae60; color: #fff; font-weight: 700; }
   .inflow .item.top2 .irank { background: rgba(39,174,96,0.3); color: #27ae60; font-weight: 700; }
@@ -137,8 +140,8 @@
   .outflow .item.top2 .irank { background: rgba(231,76,60,0.3); color: #e74c3c; font-weight: 700; }
   .outflow .item.top3 .irank { background: rgba(231,76,60,0.15); color: #e74c3c; font-weight: 600; }
   .item .iname {
-    font-size: 13px;
-    margin-left: 4px; min-width: 52px; flex-shrink: 0;
+    font-size: 10px;
+    margin-left: 2px; min-width: 34px; flex-shrink: 0;
     font-weight: 600;
   }
   .outflow .item.top1 .iname { color: #e74c3c; }
@@ -150,20 +153,20 @@
   .outflow .item .iname,
   .inflow .item .iname { color: rgba(255,255,255,0.88); }
   .item .ival {
-    font-size: 11px; font-weight: 600; text-align: right;
-    min-width: 42px; flex-shrink: 0; letter-spacing: 0.2px;
+    font-size: 9px; font-weight: 600; text-align: right;
+    min-width: 28px; flex-shrink: 0;
   }
   .item .ival.red { color: #e74c3c; }
   .item .ival.green { color: #27ae60; }
   .item .ibar {
-    flex: 1; height: 6px; border-radius: 3px;
+    flex: 1; height: 5px; border-radius: 2px;
     background: rgba(255,255,255,0.06);
-    margin: 0 3px; overflow: hidden;
+    margin: 0 1px; overflow: hidden;
     position: relative;
   }
   .item .ibar .bfill {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 2px;
     position: absolute; left: 0; top: 0;
   }
   .bfill.red-bar { background: #e74c3c; }
@@ -172,18 +175,18 @@
   /* ===== Total Row ===== */
   .total-row {
     display: flex; align-items: center;
-    padding: 4px 12px; gap: 6px;
+    padding: 3px 6px; gap: 4px;
     background: rgba(255,255,255,0.01);
     border-top: 1px solid rgba(255,255,255,0.03);
   }
-  .total-row .tlabel { font-size: 9px; color: rgba(255,255,255,0.3); }
-  .total-row .tval { font-size: 11px; font-weight: 700; }
+  .total-row .tlabel { font-size: 8px; color: rgba(255,255,255,0.3); }
+  .total-row .tval { font-size: 10px; font-weight: 700; }
   .total-row .tval.red { color: #e74c3c; }
   .total-row .tval.green { color: #27ae60; }
 
   /* ===== Footer ===== */
   .footer {
-    padding: 4px 12px; font-size: 8px; color: rgba(255,255,255,0.1);
+    padding: 3px 6px; font-size: 7px; color: rgba(255,255,255,0.1);
     border-top: 1px solid rgba(255,255,255,0.02);
     display: flex; justify-content: space-between;
   }
@@ -195,39 +198,39 @@
 <div class="header">
   <div class="header-top">
     <div class="left">
-      <span class="date-tag" id="dateTag">7月03日</span>
-      <h1>热点资金榜</h1>
+      <span class="date-tag" id="dateTag">7鏈?3鏃?/span>
+      <h1>鐑偣璧勯噾姒?/h1>
     </div>
-    <span class="time" id="updateTime">更新中</span>
+    <span class="time" id="updateTime">鏇存柊涓?/span>
   </div>
   <div class="session-selector">
-    <button class="s-btn" data-session="morning">早盘</button>
-    <button class="s-btn active" data-session="noon">午盘</button>
-    <button class="s-btn" data-session="close">收盘</button>
+    <button class="s-btn" data-session="morning">鏃╃洏</button>
+    <button class="s-btn active" data-session="noon">鍗堢洏</button>
+    <button class="s-btn" data-session="close">鏀剁洏</button>
   </div>
   <div class="index-row">
-    <span class="iname">上证指数</span>
+    <span class="iname">涓婅瘉鎸囨暟</span>
     <span class="iprice" id="indexPrice">--</span>
     <span class="ichange" id="indexChange">--</span>
-    <span class="isource">东方财富 · 实时</span>
+    <span class="isource">涓滄柟璐㈠瘜 路 瀹炴椂</span>
   </div>
 </div>
 
 <div class="stats-bar">
   <div class="stat-item">
-    <div class="slabel">主力净流入</div>
+    <div class="slabel">涓诲姏鍑€娴佸叆</div>
     <div class="svalue red" id="mainNet">--</div>
   </div>
   <div class="stat-item">
-    <div class="slabel">上涨家数</div>
+    <div class="slabel">涓婃定瀹舵暟</div>
     <div class="svalue white" id="upCount">--</div>
   </div>
   <div class="stat-item">
-    <div class="slabel">下跌家数</div>
+    <div class="slabel">涓嬭穼瀹舵暟</div>
     <div class="svalue white" id="dnCount">--</div>
   </div>
   <div class="stat-item">
-    <div class="slabel">成交额</div>
+    <div class="slabel">鎴愪氦棰?/div>
     <div class="svalue blue" id="volume">--</div>
   </div>
 </div>
@@ -235,33 +238,33 @@
 <div class="main-grid">
   <div class="panel outflow">
     <div class="ptitle">
-      🔴 流出
+      馃敶 娴佸嚭
       <span class="pcount" id="outCount">10</span>
-      <span class="psub">按净流出金额排序</span>
+      <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
     </div>
     <div id="outflowList"></div>
   </div>
   <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
     <div class="ptitle">
-      🟢 流入
+      馃煝 娴佸叆
       <span class="pcount" id="inCount">10</span>
-      <span class="psub">按净流入金额排序</span>
+      <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
     </div>
     <div id="inflowList"></div>
   </div>
 </div>
 
 <div class="total-row">
-  <span class="tlabel">流出合计</span>
+  <span class="tlabel">娴佸嚭鍚堣</span>
   <span class="tval red" id="totalOut">--</span>
-  <span class="tlabel">流入合计</span>
+  <span class="tlabel">娴佸叆鍚堣</span>
   <span class="tval green" id="totalIn">--</span>
-  <span class="tlabel">净流向</span>
+  <span class="tlabel">鍑€娴佸悜</span>
   <span class="tval" id="netFlow">--</span>
 </div>
 
 <div class="footer">
-  <span>数据来源: 东方财富</span>
+  <span>鏁版嵁鏉ユ簮: 涓滄柟璐㈠瘜</span>
   <span id="footerTime">--</span>
 </div>
 
@@ -270,20 +273,20 @@
 <script>
 const SCREENSHOT_DATA = {
   outflow: [
-    { name: "半导体", flow: -408.6 }, { name: "国产芯片", flow: -206.0 },
-    { name: "存储芯片", flow: -187.5 }, { name: "物联网", flow: -134.8 },
-    { name: "光纤", flow: -130.7 }, { name: "玻璃基板", flow: -92.8 },
-    { name: "消费电子", flow: -64.7 }, { name: "固态电池", flow: -61.1 },
-    { name: "人工智能", flow: -55.7 }, { name: "锂电池", flow: -55.0 }
+    { name: "鍗婂浣?, flow: -408.6 }, { name: "鍥戒骇鑺墖", flow: -206.0 },
+    { name: "瀛樺偍鑺墖", flow: -187.5 }, { name: "鐗╄仈缃?, flow: -134.8 },
+    { name: "鍏夌氦", flow: -130.7 }, { name: "鐜荤拑鍩烘澘", flow: -92.8 },
+    { name: "娑堣垂鐢靛瓙", flow: -64.7 }, { name: "鍥烘€佺數姹?, flow: -61.1 },
+    { name: "浜哄伐鏅鸿兘", flow: -55.7 }, { name: "閿傜數姹?, flow: -55.0 }
   ],
   inflow: [
-    { name: "机器人", flow: +128.6 }, { name: "新能源车", flow: +101.3 },
-    { name: "低空经济", flow: +68.9 }, { name: "军工", flow: +45.5 },
-    { name: "黄金", flow: +35.0 }, { name: "商业航天", flow: +17.4 },
-    { name: "电子元件", flow: +5.1 }, { name: "创新药", flow: +3.3 },
-    { name: "有色金属", flow: +3.2 }, { name: "电网设备", flow: +3.0 }
+    { name: "鏈哄櫒浜?, flow: +128.6 }, { name: "鏂拌兘婧愯溅", flow: +101.3 },
+    { name: "浣庣┖缁忔祹", flow: +68.9 }, { name: "鍐涘伐", flow: +45.5 },
+    { name: "榛勯噾", flow: +35.0 }, { name: "鍟嗕笟鑸ぉ", flow: +17.4 },
+    { name: "鐢靛瓙鍏冧欢", flow: +5.1 }, { name: "鍒涙柊鑽?, flow: +3.3 },
+    { name: "鏈夎壊閲戝睘", flow: +3.2 }, { name: "鐢电綉璁惧", flow: +3.0 }
   ],
-  index: { price: "4043.64", change: "+0.37%", isUp: true, volume: "1.47万亿" }
+  index: { price: "4043.64", change: "+0.37%", isUp: true, volume: "1.47涓囦嚎" }
 };
 
 const CONCEPT_URL = 'https://push2.eastmoney.com/api/qt/clist/get?cb=&fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:3&fields=f12,f14,f62,f69';
@@ -301,7 +304,7 @@ async function fetchRealData() {
       const change = (d.f43 - d.f44) / 100;
       const changePct = d.f170 != null ? d.f170 / 100 : 0;
       const isUp = change >= 0;
-      idxData = { price, change: (isUp ? '+' : '') + change.toFixed(2) + '%', isUp, volume: d.f48 ? (d.f48 / 1e8).toFixed(1) + '亿' : '--' };
+      idxData = { price, change: (isUp ? '+' : '') + change.toFixed(2) + '%', isUp, volume: d.f48 ? (d.f48 / 1e8).toFixed(1) + '浜? : '--' };
     }
     let conceptData = null;
     if (conceptJson.rc === 0 && conceptJson.data) {
@@ -319,11 +322,11 @@ function render(data) {
   const now = new Date();
   const mo = (now.getMonth()+1).toString().padStart(2,'0');
   const da = now.getDate().toString().padStart(2,'0');
-  const labelMap = { morning: '早盘', noon: '午盘', close: '收盘' };
-  document.getElementById('dateTag').textContent = mo + '月' + da + '日 ' + (labelMap[currentSession] || '收盘');
+  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
+  document.getElementById('dateTag').textContent = mo + '鏈? + da + '鏃?' + (labelMap[currentSession] || '鏀剁洏');
   const ts = now.toLocaleString('zh-CN', { hour12: false });
-  document.getElementById('updateTime').textContent = snapTime ? '快照 ' + snapTime : ts;
-  document.getElementById('footerTime').textContent = snapTime ? '快照于 ' + snapTime : '更新于 ' + ts;
+  document.getElementById('updateTime').textContent = snapTime ? '蹇収 ' + snapTime : ts;
+  document.getElementById('footerTime').textContent = snapTime ? '蹇収浜?' + snapTime : '鏇存柊浜?' + ts;
 
   if (idxData) {
     document.getElementById('indexPrice').textContent = idxData.price;
@@ -347,14 +350,14 @@ function render(data) {
   const totalIn = inflow.reduce((s, i) => s + i.flow, 0);
   const netFlowVal = totalIn - totalOut;
 
-  document.getElementById('totalOut').textContent = '-' + totalOut.toFixed(1) + '亿';
-  document.getElementById('totalIn').textContent = '+' + totalIn.toFixed(1) + '亿';
-  document.getElementById('netFlow').textContent = (netFlowVal >= 0 ? '+' : '') + netFlowVal.toFixed(1) + '亿';
+  document.getElementById('totalOut').textContent = '-' + totalOut.toFixed(1) + '浜?;
+  document.getElementById('totalIn').textContent = '+' + totalIn.toFixed(1) + '浜?;
+  document.getElementById('netFlow').textContent = (netFlowVal >= 0 ? '+' : '') + netFlowVal.toFixed(1) + '浜?;
   document.getElementById('netFlow').className = 'tval ' + (netFlowVal >= 0 ? 'green' : 'red');
-  document.getElementById('upCount').textContent = inflow.length + '家';
-  document.getElementById('dnCount').textContent = outflow.length + '家';
+  document.getElementById('upCount').textContent = inflow.length + '瀹?;
+  document.getElementById('dnCount').textContent = outflow.length + '瀹?;
   const mainNet = totalIn - totalOut;
-  document.getElementById('mainNet').textContent = (mainNet >= 0 ? '+' : '') + mainNet.toFixed(1) + '亿';
+  document.getElementById('mainNet').textContent = (mainNet >= 0 ? '+' : '') + mainNet.toFixed(1) + '浜?;
   document.getElementById('mainNet').className = 'svalue ' + (mainNet >= 0 ? 'green' : 'red');
 
   let outHtml = '';
@@ -366,7 +369,7 @@ function render(data) {
       <span class="irank">${idx+1}</span>
       <span class="iname">${item.name}</span>
       <div class="ibar" data-bar="${barPct}"><div class="bfill red-bar" style="width:0%"></div></div>
-      <span class="ival red" data-target="${abs.toFixed(1)}">0.0亿</span>
+      <span class="ival red" data-target="${abs.toFixed(1)}">0.0浜?/span>
     </div>`;
   });
   document.getElementById('outflowList').innerHTML = outHtml;
@@ -380,7 +383,7 @@ function render(data) {
       <span class="irank">${idx+1}</span>
       <span class="iname">${item.name}</span>
       <div class="ibar" data-bar="${barPct}"><div class="bfill green-bar" style="width:0%"></div></div>
-      <span class="ival green" data-target="${abs.toFixed(1)}">0.0亿</span>
+      <span class="ival green" data-target="${abs.toFixed(1)}">0.0浜?/span>
     </div>`;
   });
   document.getElementById('inflowList').innerHTML = inHtml;
@@ -416,7 +419,7 @@ function render(data) {
         const progress = Math.min(elapsed / DURATION, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         const current = (targetVal * eased).toFixed(1);
-        valEl.textContent = prefix + current + '亿';
+        valEl.textContent = prefix + current + '浜?;
         if (progress < 1) requestAnimationFrame(animateVal);
       }
       requestAnimationFrame(animateVal);
@@ -434,7 +437,7 @@ function getSnapshots() {
 
 function saveSnapshot(session, data) {
   const snaps = getSnapshots();
-  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','月');
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
   snaps[dateStr + '_' + session] = {
     time: new Date().toLocaleString('zh-CN', {hour12: false}),
     outflow: data.outflow,
@@ -446,7 +449,7 @@ function saveSnapshot(session, data) {
 
 function loadSnapshot(session) {
   const snaps = getSnapshots();
-  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','月');
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
   return snaps[dateStr + '_' + session] || null;
 }
 
@@ -464,9 +467,9 @@ function updateSessionUI(session) {
   document.querySelectorAll('.s-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.session === session);
   });
-  const labelMap = { morning: '早盘', noon: '午盘', close: '收盘' };
-  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','月');
-  document.querySelector('.date-tag').textContent = dateStr + '日 ' + labelMap[session];
+  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
+  document.querySelector('.date-tag').textContent = dateStr + '鏃?' + labelMap[session];
 }
 
 document.querySelectorAll('.s-btn').forEach(btn => {
