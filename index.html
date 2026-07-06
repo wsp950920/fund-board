@@ -577,12 +577,7 @@ document.querySelectorAll('.s-btn').forEach(btn => {
 });
 
 async function loadAndRender() {
-  const snap = loadSnapshot(currentSession);
-  if (snap && snap.concept && snap.industry) {
-    render({ idxData: snap.idxData, conceptData: snap.concept, industryData: snap.industry, isSnapshot: true, snapTime: snap.time });
-  } else {
-    await refreshData();
-  }
+  await refreshData();
 }
 
 async function refreshData() {
@@ -598,17 +593,19 @@ async function refreshData() {
 // ===== 鍒濆鍖?=====
 currentSession = autoDetectSession();
 updateSessionUI(currentSession);
-loadAndRender();
 
-setInterval(() => {
-  const s = autoDetectSession();
-  if (s !== currentSession) {
-    currentSession = s;
-    updateSessionUI(currentSession);
-    loadAndRender();
-  }
-  refreshData();
-}, 60000);
+async function initPage() {
+  await refreshData();
+  setInterval(async () => {
+    const s = autoDetectSession();
+    if (s !== currentSession) {
+      currentSession = s;
+      updateSessionUI(currentSession);
+    }
+    await refreshData();
+  }, 60000);
+}
+initPage();
 </script>
 </body>
 </html>
