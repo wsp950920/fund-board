@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -321,6 +321,8 @@
 
 <script>
 // ===== 鎴浘澶囩敤鏁版嵁 =====
+let lastGoodData = null;
+
 const SCREENSHOT_DATA = {
   concept: {
     outflow: [
@@ -594,14 +596,20 @@ async function loadAndRender() {
 async function refreshData() {
   const r = await fetchRealData();
   if (r && r.conceptData && r.industryData) {
+    lastGoodData = r;
     saveSnapshot(currentSession, r);
     document.getElementById('dataWarning').classList.remove('show');
     render(r);
   } else {
-    // 指数单独用腾讯接口拉，板块用缓存
     const idxData = await fetchIndexData();
-    document.getElementById('dataWarning').classList.add('show');
-    render({ idxData: idxData || SCREENSHOT_DATA.index, conceptData: SCREENSHOT_DATA.concept, industryData: SCREENSHOT_DATA.industry });
+    if (lastGoodData) {
+      lastGoodData.idxData = idxData || lastGoodData.idxData;
+      document.getElementById('dataWarning').classList.remove('show');
+      render(lastGoodData);
+    } else {
+      document.getElementById('dataWarning').classList.add('show');
+      render({ idxData: idxData || SCREENSHOT_DATA.index, conceptData: SCREENSHOT_DATA.concept, industryData: SCREENSHOT_DATA.industry });
+    }
   }
 }
 
