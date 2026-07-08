@@ -1,0 +1,636 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>鐑偣璧勯噾姒?路 涓婅瘉鎸囨暟</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #050508;
+    color: #ccc;
+    padding: 0;
+    min-height: 100vh;
+    font-size: 9px;
+  }
+  .container {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #0a0a0e;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(180deg, #0f0f14 0%, #0a0a0e 100%);
+    padding: 4px 6px 3px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3px;
+  }
+  .header-top .left { display: flex; align-items: center; gap: 4px; }
+  .header-top .left .date-tag {
+    font-size: 8px; color: #fff; background: #e74c3c;
+    padding: 1px 5px; border-radius: 2px; font-weight: 600;
+  }
+  .header-top .left h1 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+  .header-top .time { font-size: 8px; color: rgba(255,255,255,0.3); }
+
+  .session-selector {
+    display: flex; gap: 2px;
+    padding: 2px 6px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .session-selector .s-btn {
+    font-size: 8px; padding: 2px 7px;
+    border-radius: 3px; border: none;
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+  }
+  .session-selector .s-btn.active {
+    background: rgba(231,76,60,0.15);
+    color: #e74c3c;
+  }
+
+  .index-row {
+    display: flex; align-items: baseline; gap: 4px;
+    padding: 3px 5px;
+    background: rgba(255,255,255,0.02); border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .index-row .iname { font-size: 9px; color: rgba(255,255,255,0.5); font-weight: 500; }
+  .index-row .iprice { font-size: 15px; font-weight: 700; letter-spacing: 0.2px; }
+  .index-row .iprice.up { color: #e74c3c; }
+  .index-row .iprice.down { color: #27ae60; }
+  .index-row .ichange { font-size: 10px; font-weight: 500; }
+  .index-row .ichange.up { color: #e74c3c; }
+  .index-row .ichange.down { color: #27ae60; }
+  .index-row .isource { margin-left: auto; font-size: 7px; color: rgba(255,255,255,0.12); }
+
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    padding: 3px 6px;
+    background: rgba(255,255,255,0.015);
+    border-bottom: 1px solid rgba(255,255,255,0.025);
+  }
+  .stat-item { text-align: center; }
+  .stat-item .slabel { font-size: 7px; color: rgba(255,255,255,0.3); margin-bottom: 1px; }
+  .stat-item .svalue { font-size: 11px; font-weight: 700; }
+  .stat-item .svalue.red { color: #e74c3c; }
+  .stat-item .svalue.green { color: #27ae60; }
+  .stat-item .svalue.white { color: #fff; }
+  .stat-item .svalue.blue { color: #5b8ff9; }
+
+  .main-grid { display: flex; flex-direction: column; gap: 2px; }
+
+  .panel { padding: 3px 1px 2px; }
+  .panel .ptitle {
+    font-size: 10px; font-weight: 700; margin-bottom: 2px; padding: 0 1px;
+    display: flex; align-items: center; gap: 2px;
+  }
+  .panel.outflow .ptitle { color: #e74c3c; }
+  .panel.inflow .ptitle { color: #27ae60; }
+  .panel .ptitle .psub { font-size: 7px; font-weight: 400; margin-left: auto; color: rgba(255,255,255,0.2); }
+  .panel .ptitle .pcount {
+    font-size: 8px; font-weight: 600;
+    background: rgba(255,255,255,0.05); padding: 0 4px; border-radius: 2px;
+  }
+  .panel.outflow .ptitle .pcount { color: #e74c3c; }
+  .panel.inflow .ptitle .pcount { color: #27ae60; }
+
+  .section-tab {
+    display: flex; gap: 2px; padding: 2px 2px 0;
+  }
+  .section-tab .tab-btn {
+    font-size: 9px; padding: 3px 10px;
+    border-radius: 3px 3px 0 0; border: none;
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.3);
+    cursor: pointer; font-weight: 600;
+  }
+  .section-tab .tab-btn.active {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+  }
+
+  .section-body { }
+  .section-body.hidden { display: none; }
+
+  .data-warning {
+    display: none;
+    text-align: center; padding: 4px 6px;
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.2);
+    border-radius: 3px;
+    margin: 2px 6px;
+    font-size: 8px; color: #e74c3c;
+  }
+  .data-warning.show { display: block; }
+
+  .item {
+    display: flex; align-items: center;
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    border-radius: 2px;
+  }
+  .item:last-child { border-bottom: none; }
+  .outflow .item.top1 { background: rgba(231,76,60,0.25); }
+  .outflow .item.top2 { background: rgba(231,76,60,0.15); }
+  .outflow .item.top3 { background: rgba(231,76,60,0.08); }
+  .inflow .item.top1 { background: rgba(39,174,96,0.25); }
+  .inflow .item.top2 { background: rgba(39,174,96,0.15); }
+  .inflow .item.top3 { background: rgba(39,174,96,0.08); }
+  .item .irank {
+    font-size: 6px; color: rgba(255,255,255,0.25);
+    width: 11px; height: 11px; line-height: 11px;
+    text-align: center; flex-shrink: 0;
+    border-radius: 2px;
+  }
+  .inflow .item.top1 .irank { background: #27ae60; color: #fff; font-weight: 700; }
+  .inflow .item.top2 .irank { background: rgba(39,174,96,0.3); color: #27ae60; font-weight: 700; }
+  .inflow .item.top3 .irank { background: rgba(39,174,96,0.15); color: #27ae60; font-weight: 600; }
+  .outflow .item.top1 .irank { background: #e74c3c; color: #fff; font-weight: 700; }
+  .outflow .item.top2 .irank { background: rgba(231,76,60,0.3); color: #e74c3c; font-weight: 700; }
+  .outflow .item.top3 .irank { background: rgba(231,76,60,0.15); color: #e74c3c; font-weight: 600; }
+  .item .iname {
+    font-size: 9px;
+    margin-left: 2px; min-width: 28px; flex-shrink: 0;
+    font-weight: 600;
+  }
+  .outflow .item.top1 .iname { color: #e74c3c; }
+  .outflow .item.top2 .iname { color: #e74c3c; }
+  .outflow .item.top3 .iname { color: #e74c3c; }
+  .inflow .item.top1 .iname { color: #27ae60; }
+  .inflow .item.top2 .iname { color: #27ae60; }
+  .inflow .item.top3 .iname { color: #27ae60; }
+  .outflow .item .iname,
+  .inflow .item .iname { color: rgba(255,255,255,0.88); }
+  .item .ival {
+    font-size: 8px; font-weight: 600; text-align: right;
+    min-width: 24px; flex-shrink: 0;
+  }
+  .item .ival.red { color: #e74c3c; }
+  .item .ival.green { color: #27ae60; }
+  .item .ibar {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.06);
+    margin: 0 1px; overflow: hidden;
+    position: relative;
+  }
+  .item .ibar .bfill {
+    height: 100%;
+    border-radius: 2px;
+    position: absolute; left: 0; top: 0;
+  }
+  .bfill.red-bar { background: #e74c3c; }
+  .bfill.green-bar { background: #27ae60; }
+
+  .total-row {
+    display: flex; align-items: center;
+    padding: 3px 6px; gap: 4px;
+    background: rgba(255,255,255,0.01);
+    border-top: 1px solid rgba(255,255,255,0.03);
+  }
+  .total-row .tlabel { font-size: 8px; color: rgba(255,255,255,0.3); }
+  .total-row .tval { font-size: 10px; font-weight: 700; }
+  .total-row .tval.red { color: #e74c3c; }
+  .total-row .tval.green { color: #27ae60; }
+
+  .footer {
+    padding: 3px 6px; font-size: 7px; color: rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255,255,255,0.02);
+    display: flex; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="header-top">
+    <div class="left">
+      <span class="date-tag" id="dateTag">7鏈?3鏃?/span>
+      <h1>鐑偣璧勯噾姒?/h1>
+    </div>
+    <span class="time" id="updateTime">鏇存柊涓?/span>
+  </div>
+  <div class="session-selector">
+    <button class="s-btn" data-session="morning">鏃╃洏</button>
+    <button class="s-btn active" data-session="noon">鍗堢洏</button>
+    <button class="s-btn" data-session="close">鏀剁洏</button>
+  </div>
+  <div class="index-row">
+    <span class="iname">涓婅瘉鎸囨暟</span>
+    <span class="iprice" id="indexPrice">--</span>
+    <span class="ichange" id="indexChange">--</span>
+    <span class="isource">涓滄柟璐㈠瘜 路 瀹炴椂</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="slabel">涓诲姏鍑€娴佸叆</div>
+    <div class="svalue red" id="mainNet">--</div>
+  </div>
+  <div class="stat-item">
+    <div class="slabel">涓婃定瀹舵暟</div>
+    <div class="svalue white" id="upCount">--</div>
+  </div>
+  <div class="stat-item">
+    <div class="slabel">涓嬭穼瀹舵暟</div>
+    <div class="svalue white" id="dnCount">--</div>
+  </div>
+  <div class="stat-item">
+    <div class="slabel">鎴愪氦棰?/div>
+    <div class="svalue blue" id="volume">--</div>
+  </div>
+</div>
+
+<!-- 鏉垮潡鍒囨崲鏍囩 -->
+<div class="section-tab">
+  <button class="tab-btn active" data-section="concept">姒傚康鏉垮潡</button>
+  <button class="tab-btn" data-section="industry">琛屼笟鏉垮潡</button>
+</div>
+
+<div class="main-grid">
+  <!-- 姒傚康鏉垮潡 -->
+  <div class="section-body" id="section-concept">
+    <div class="panel outflow">
+      <div class="ptitle">
+        馃敶 娴佸嚭
+        <span class="pcount" id="outCountC">10</span>
+        <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
+      </div>
+      <div id="outflowListC"></div>
+    </div>
+    <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
+      <div class="ptitle">
+        馃煝 娴佸叆
+        <span class="pcount" id="inCountC">10</span>
+        <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
+      </div>
+      <div id="inflowListC"></div>
+    </div>
+  </div>
+
+  <!-- 琛屼笟鏉垮潡 -->
+  <div class="section-body hidden" id="section-industry">
+    <div class="panel outflow">
+      <div class="ptitle">
+        馃敶 娴佸嚭
+        <span class="pcount" id="outCountI">10</span>
+        <span class="psub">鎸夊噣娴佸嚭閲戦鎺掑簭</span>
+      </div>
+      <div id="outflowListI"></div>
+    </div>
+    <div class="panel inflow" style="border-top:1px solid rgba(255,255,255,0.04)">
+      <div class="ptitle">
+        馃煝 娴佸叆
+        <span class="pcount" id="inCountI">10</span>
+        <span class="psub">鎸夊噣娴佸叆閲戦鎺掑簭</span>
+      </div>
+      <div id="inflowListI"></div>
+    </div>
+  </div>
+</div>
+
+<div class="total-row">
+  <span class="tlabel">娴佸嚭鍚堣</span>
+  <span class="tval red" id="totalOut">--</span>
+  <span class="tlabel">娴佸叆鍚堣</span>
+  <span class="tval green" id="totalIn">--</span>
+  <span class="tlabel">鍑€娴佸悜</span>
+  <span class="tval" id="netFlow">--</span>
+</div>
+
+<div class="footer">
+  <span>鏁版嵁鏉ユ簮: 涓滄柟璐㈠瘜</span>
+  <span id="footerTime">--</span>
+</div>
+
+</div>
+
+<script>
+// ===== 鎴浘澶囩敤鏁版嵁 =====
+let lastGoodData = null;
+
+const SCREENSHOT_DATA = {
+  concept: {
+    outflow: [
+      { name: "鍗婂浣?, flow: -408.6 }, { name: "鍥戒骇鑺墖", flow: -206.0 },
+      { name: "瀛樺偍鑺墖", flow: -187.5 }, { name: "鐗╄仈缃?, flow: -134.8 },
+      { name: "鍏夌氦", flow: -130.7 }, { name: "鐜荤拑鍩烘澘", flow: -92.8 },
+      { name: "娑堣垂鐢靛瓙", flow: -64.7 }, { name: "鍥烘€佺數姹?, flow: -61.1 },
+      { name: "浜哄伐鏅鸿兘", flow: -55.7 }, { name: "閿傜數姹?, flow: -55.0 }
+    ],
+    inflow: [
+      { name: "鏈哄櫒浜?, flow: +128.6 }, { name: "鏂拌兘婧愯溅", flow: +101.3 },
+      { name: "浣庣┖缁忔祹", flow: +68.9 }, { name: "鍐涘伐", flow: +45.5 },
+      { name: "榛勯噾", flow: +35.0 }, { name: "鍟嗕笟鑸ぉ", flow: +17.4 },
+      { name: "鐢靛瓙鍏冧欢", flow: +5.1 }, { name: "鍒涙柊鑽?, flow: +3.3 },
+      { name: "鏈夎壊閲戝睘", flow: +3.2 }, { name: "鐢电綉璁惧", flow: +3.0 }
+    ]
+  },
+  industry: {
+    outflow: [
+      { name: "鍗婂浣?, flow: -408.6 }, { name: "娑堣垂鐢靛瓙", flow: -64.7 },
+      { name: "閰块厭琛屼笟", flow: -48.2 }, { name: "鎴垮湴浜у紑鍙?, flow: -42.1 },
+      { name: "鍏変紡璁惧", flow: -38.5 }, { name: "鐢垫睜", flow: -35.3 },
+      { name: "浜掕仈缃戞湇鍔?, flow: -32.8 }, { name: "姹借溅鏁磋溅", flow: -29.6 },
+      { name: "瀹剁數琛屼笟", flow: -22.4 }, { name: "鍖栧鍒跺搧", flow: -18.7 }
+    ],
+    inflow: [
+      { name: "閫氱敤璁惧", flow: +56.2 }, { name: "涓撶敤璁惧", flow: +48.9 },
+      { name: "鍖荤枟鍣ㄦ", flow: +37.4 }, { name: "鑸ぉ鑸┖", flow: +26.1 },
+      { name: "璐甸噾灞?, flow: +22.3 }, { name: "鐢靛瓙鍏冧欢", flow: +15.1 },
+      { name: "閫氫俊璁惧", flow: +12.6 }, { name: "鐢靛姏琛屼笟", flow: +9.8 },
+      { name: "鐢电綉璁惧", flow: +6.5 }, { name: "涓嵂", flow: +4.2 }
+    ]
+  },
+  index: { price: "4043.64", change: "+0.37%", isUp: true, volume: "1.47涓囦嚎" }
+};
+
+// ===== API 鍦板潃 =====
+const CONCEPT_URL = 'https://push2.eastmoney.com/api/qt/clist/get?cb=&fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:3&fields=f12,f14,f62,f69';
+const INDUSTRY_URL = 'https://push2.eastmoney.com/api/qt/clist/get?cb=&fid=f62&po=1&pz=30&pn=1&np=1&fltt=2&invt=2&fs=m:90+t:2&fields=f12,f14,f62,f69';
+const INDEX_URL = 'https://qt.gtimg.cn/q=sh000001';
+
+let currentSession = 'close';
+let currentSection = 'concept'; // concept or industry
+const SNAPSHOT_KEY = 'fund_board_snapshots';
+
+// ===== 鏁版嵁鑾峰彇 =====
+async function fetchSectionData(url) {
+  try {
+    const resp = await fetch(url);
+    const json = await resp.json();
+    if (json.rc === 0 && json.data && json.data.diff) {
+      const items = json.data.diff;
+      const outflow = items.filter(i => (i.f62 || 0) < 0).slice(0, 10).map(i => ({ name: i.f14, flow: parseFloat((i.f62 / 1e8).toFixed(1)) }));
+      const inflow = items.filter(i => (i.f62 || 0) > 0).slice(0, 10).map(i => ({ name: i.f14, flow: parseFloat((i.f62 / 1e8).toFixed(1)) }));
+      if (outflow.length >= 5 && inflow.length >= 5) return { outflow, inflow };
+    }
+    return null;
+  } catch(e) { return null; }
+}
+
+async function fetchIndexData() {
+  try {
+    const resp = await fetch(INDEX_URL);
+    const json = await resp.json();
+    if (json.rc === 0 && json.data) {
+      const d = json.data;
+      const price = (d.f43 / 100).toFixed(2);
+      const change = (d.f43 - d.f44) / 100;
+      const isUp = change >= 0;
+      return { price, change: (isUp ? '+' : '') + change.toFixed(2) + '%', isUp, volume: d.f48 ? (d.f48 / 1e8).toFixed(1) + '浜? : '--' };
+    }
+    return null;
+  } catch(e) { return null; }
+}
+
+async function fetchRealData() {
+  const idxData = await fetchIndexData();
+  const [conceptData, industryData] = await Promise.all([
+    fetchSectionData(CONCEPT_URL),
+    fetchSectionData(INDUSTRY_URL)
+  ]);
+  return { idxData, conceptData, industryData };
+}
+
+// ===== 娓叉煋 =====
+function renderItem(item, idx, maxAbs) {
+  const abs = Math.abs(item.flow);
+  const barPct = (abs / maxAbs) * 100;
+  const topCls = idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : '';
+  const isGreen = item.flow > 0;
+  const prefix = isGreen ? '+' : '-';
+  return `<div class="item ${topCls}">
+    <span class="irank">${idx+1}</span>
+    <span class="iname">${item.name}</span>
+    <div class="ibar" data-bar="${barPct}"><div class="bfill ${isGreen ? 'green-bar' : 'red-bar'}" style="width:0%"></div></div>
+    <span class="ival ${isGreen ? 'green' : 'red'}" data-target="${abs.toFixed(1)}">0.0浜?/span>
+  </div>`;
+}
+
+function renderSection(sectionId, data) {
+  const { outflow, inflow } = data;
+  const maxOut = Math.max(...outflow.map(i => Math.abs(i.flow)), 1);
+  const maxIn = Math.max(...inflow.map(i => Math.abs(i.flow)), 1);
+
+  document.getElementById('outCount' + sectionId).textContent = outflow.length;
+  document.getElementById('inCount' + sectionId).textContent = inflow.length;
+
+  document.getElementById('outflowList' + sectionId).innerHTML = outflow.map((item, idx) => renderItem(item, idx, maxOut)).join('');
+  document.getElementById('inflowList' + sectionId).innerHTML = inflow.map((item, idx) => renderItem(item, idx, maxIn)).join('');
+
+  // 鍔ㄧ敾
+  const items = document.querySelectorAll('#section-' + (sectionId === 'C' ? 'concept' : 'industry') + ' .item');
+  const DURATION = 20000;
+  items.forEach((item, idx) => {
+    const delay = idx * 150;
+    const bar = item.querySelector('.ibar');
+    const targetBar = bar ? bar.dataset.bar : 0;
+    const fill = bar ? bar.querySelector('.bfill') : null;
+    const valEl = item.querySelector('.ival');
+    const targetVal = valEl ? parseFloat(valEl.dataset.target || '0') : 0;
+    const isGreen = valEl && valEl.classList.contains('green');
+
+    if (fill && targetBar) {
+      fill.style.width = '0%';
+      fill.style.transition = 'none';
+      void fill.offsetWidth;
+      setTimeout(() => {
+        fill.style.transition = 'width ' + DURATION + 'ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        fill.style.width = targetBar + '%';
+      }, delay);
+    }
+
+    if (valEl && targetVal > 0) {
+      const prefix = isGreen ? '+' : '-';
+      const startTime = Date.now() + delay;
+      function animateVal() {
+        const elapsed = Date.now() - startTime;
+        if (elapsed < 0) { requestAnimationFrame(animateVal); return; }
+        const progress = Math.min(elapsed / DURATION, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = (targetVal * eased).toFixed(1);
+        valEl.textContent = prefix + current + '浜?;
+        if (progress < 1) requestAnimationFrame(animateVal);
+      }
+      requestAnimationFrame(animateVal);
+    }
+  });
+}
+
+function render(data) {
+  const { idxData, conceptData, industryData, isSnapshot, snapTime } = data;
+  const now = new Date();
+  const mo = (now.getMonth()+1).toString().padStart(2,'0');
+  const da = now.getDate().toString().padStart(2,'0');
+  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
+  document.getElementById('dateTag').textContent = mo + '鏈? + da + '鏃?' + (labelMap[currentSession] || '鏀剁洏');
+  const ts = now.toLocaleString('zh-CN', { hour12: false });
+  document.getElementById('updateTime').textContent = snapTime ? '蹇収 ' + snapTime : ts;
+  document.getElementById('footerTime').textContent = snapTime ? '蹇収浜?' + snapTime : '鏇存柊浜?' + ts;
+
+  if (idxData) {
+    document.getElementById('indexPrice').textContent = idxData.price;
+    document.getElementById('indexPrice').className = 'iprice ' + (idxData.isUp ? 'up' : 'down');
+    document.getElementById('indexChange').textContent = idxData.change;
+    document.getElementById('indexChange').className = 'ichange ' + (idxData.isUp ? 'up' : 'down');
+    document.getElementById('volume').textContent = idxData.volume || '--';
+  } else {
+    document.getElementById('indexPrice').textContent = SCREENSHOT_DATA.index.price;
+    document.getElementById('indexPrice').className = 'iprice up';
+    document.getElementById('indexChange').textContent = SCREENSHOT_DATA.index.change;
+    document.getElementById('indexChange').className = 'ichange up';
+  }
+
+  // 姒傚康鏉垮潡
+  if (conceptData) {
+    renderSection('C', conceptData);
+  } else {
+    renderSection('C', SCREENSHOT_DATA.concept);
+  }
+
+  // 琛屼笟鏉垮潡
+  if (industryData) {
+    renderSection('I', industryData);
+  } else {
+    renderSection('I', SCREENSHOT_DATA.industry);
+  }
+
+  // 鍚堣锛堜互褰撳墠鏄剧ず鏉垮潡涓哄噯锛?  const activeData = currentSection === 'concept' ? (conceptData || SCREENSHOT_DATA.concept) : (industryData || SCREENSHOT_DATA.industry);
+  const totalOut = activeData.outflow.reduce((s, i) => s + Math.abs(i.flow), 0);
+  const totalIn = activeData.inflow.reduce((s, i) => s + i.flow, 0);
+  const netFlowVal = totalIn - totalOut;
+
+  document.getElementById('totalOut').textContent = '-' + totalOut.toFixed(1) + '浜?;
+  document.getElementById('totalIn').textContent = '+' + totalIn.toFixed(1) + '浜?;
+  document.getElementById('netFlow').textContent = (netFlowVal >= 0 ? '+' : '') + netFlowVal.toFixed(1) + '浜?;
+  document.getElementById('netFlow').className = 'tval ' + (netFlowVal >= 0 ? 'green' : 'red');
+
+  document.getElementById('upCount').textContent = activeData.inflow.length + '瀹?;
+  document.getElementById('dnCount').textContent = activeData.outflow.length + '瀹?;
+  const mainNet = totalIn - totalOut;
+  document.getElementById('mainNet').textContent = (mainNet >= 0 ? '+' : '') + mainNet.toFixed(1) + '浜?;
+  document.getElementById('mainNet').className = 'svalue ' + (mainNet >= 0 ? 'green' : 'red');
+}
+
+// ===== 蹇収 =====
+function getSnapshots() {
+  try { return JSON.parse(localStorage.getItem(SNAPSHOT_KEY)) || {}; } catch(e) { return {}; }
+}
+
+function saveSnapshot(session, data) {
+  const snaps = getSnapshots();
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
+  snaps[dateStr + '_' + session] = {
+    time: new Date().toLocaleString('zh-CN', {hour12: false}),
+    concept: data.conceptData || null,
+    industry: data.industryData || null,
+    idxData: data.idxData
+  };
+  localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snaps));
+}
+
+function loadSnapshot(session) {
+  const snaps = getSnapshots();
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
+  return snaps[dateStr + '_' + session] || null;
+}
+
+function autoDetectSession() {
+  const h = new Date().getHours();
+  const m = new Date().getMinutes();
+  const totalMin = h * 60 + m;
+  if (totalMin >= 570 && totalMin < 690) return 'morning';
+  if (totalMin >= 780 && totalMin < 900) return 'noon';
+  return 'close';
+}
+
+function updateSessionUI(session) {
+  document.querySelectorAll('.s-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.session === session);
+  });
+  const labelMap = { morning: '鏃╃洏', noon: '鍗堢洏', close: '鏀剁洏' };
+  const dateStr = new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit'}).replace('/','鏈?);
+  document.querySelector('.date-tag').textContent = dateStr + '鏃?' + labelMap[session];
+}
+
+// ===== 鏉垮潡鍒囨崲 =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentSection = this.dataset.section;
+    document.querySelectorAll('.section-body').forEach(el => el.classList.add('hidden'));
+    document.getElementById('section-' + currentSection).classList.remove('hidden');
+  });
+});
+
+// ===== 鏃舵鍒囨崲 =====
+document.querySelectorAll('.s-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentSession = this.dataset.session;
+    loadAndRender();
+  });
+});
+
+async function loadAndRender() {
+  await refreshData();
+}
+
+async function refreshData() {
+  const r = await fetchRealData();
+  if (r && r.conceptData && r.industryData) {
+    lastGoodData = r;
+    saveSnapshot(currentSession, r);
+    document.getElementById('dataWarning').classList.remove('show');
+    render(r);
+  } else {
+    const idxData = await fetchIndexData();
+    if (lastGoodData) {
+      lastGoodData.idxData = idxData || lastGoodData.idxData;
+      document.getElementById('dataWarning').classList.remove('show');
+      render(lastGoodData);
+    } else {
+      document.getElementById('dataWarning').classList.add('show');
+      render({ idxData: idxData || SCREENSHOT_DATA.index, conceptData: SCREENSHOT_DATA.concept, industryData: SCREENSHOT_DATA.industry });
+    }
+  }
+}
+
+// ===== 鍒濆鍖?=====
+currentSession = autoDetectSession();
+updateSessionUI(currentSession);
+
+async function initPage() {
+  await refreshData();
+  setInterval(async () => {
+    const s = autoDetectSession();
+    if (s !== currentSession) {
+      currentSession = s;
+      updateSessionUI(currentSession);
+    }
+    await refreshData();
+  }, 60000);
+}
+initPage();
+</script>
+</body>
+</html>
+
+
